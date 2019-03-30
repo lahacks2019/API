@@ -94,11 +94,18 @@ const Query = new GraphQLObjectType({
     users: {
         type: new GraphQLList(new GraphQLNonNull(User)),
         resolve(parentValue){
-            refUsers.on("value", function(snapshot) {
-                console.log(snapshot.val());
-              }, function (errorObject) {
-                console.log("The read failed: " + errorObject.code);
-              });
+            var count = 0;
+            let val = {};
+            refUsers.on("child_added", function(snap) {
+              count++;
+              return snap.val();
+            });
+            
+            // length will always equal count, since snap.val() will include every child_added event
+            // triggered before this point
+            refUsers.once("value", function(snap) {
+              console.log("initial data loaded!", snap.numChildren() === count);
+            });
         }
     },
 
@@ -119,11 +126,18 @@ const Query = new GraphQLObjectType({
     transactions: {
         type: new GraphQLList(new GraphQLNonNull(Transaction)),
         resolve(parentValue){
-            refTransactions.on("value", function(snapshot) {
-                console.log(snapshot.val());
-              }, function (errorObject) {
-                console.log("The read failed: " + errorObject.code);
-              });
+            var count = 0;
+            let val = {};
+            refTransactions.on("child_added", function(snap) {
+              count++;
+              return snap.val();
+            });
+            
+            // length will always equal count, since snap.val() will include every child_added event
+            // triggered before this point
+            refTransactions.once("value", function(snap) {
+              console.log("initial data loaded!", snap.numChildren() === count);
+            });
         }
     },
   }

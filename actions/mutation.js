@@ -32,8 +32,11 @@ const Mutation = new GraphQLObjectType({
         addUser:{
             type: User ,
             args: {
+                id : { type: new GraphQLNonNull(GraphQLString)},
                 email: { type: new GraphQLNonNull(GraphQLString)},
                 identity: { type: new GraphQLNonNull(GraphQLString)},
+                pictureURL: { type: new GraphQLNonNull(GraphQLString)},
+                fbID: { type: new GraphQLNonNull(GraphQLString)},
                 defaultLocation: { type: new GraphQLNonNull(GraphQLString)},
                 rating: { type: new GraphQLNonNull(GraphQLFloat) },
                 reviews: { type: new GraphQLNonNull(GraphQLInt) },
@@ -49,6 +52,7 @@ const Mutation = new GraphQLObjectType({
         addTransaction:{
             type: Transaction ,
             args: {
+                id : { type: new GraphQLNonNull(GraphQLString)},
                 userID: { type: new GraphQLNonNull(GraphQLString)},
                 itemID: { type: new GraphQLNonNull(GraphQLString)},
                 time: { type: new GraphQLNonNull(GraphQLString)},
