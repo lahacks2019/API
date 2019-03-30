@@ -35,6 +35,8 @@ const Mutation = new GraphQLObjectType({
                 id : { type: new GraphQLNonNull(GraphQLString)},
                 email: { type: new GraphQLNonNull(GraphQLString)},
                 identity: { type: new GraphQLNonNull(GraphQLString)},
+                pictureURL: { type: new GraphQLNonNull(GraphQLString)},
+                fbID: { type: new GraphQLNonNull(GraphQLString)},
                 defaultLocation: { type: new GraphQLNonNull(GraphQLString)},
                 rating: { type: new GraphQLNonNull(GraphQLFloat) },
                 reviews: { type: new GraphQLNonNull(GraphQLInt) },
