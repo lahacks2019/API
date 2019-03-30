@@ -13,6 +13,7 @@ const Mutation = new GraphQLObjectType({
         addItem:{
             type: Item ,
             args: {
+                id : { type: new GraphQLNonNull(GraphQLString)},
                 name: { type: new GraphQLNonNull(GraphQLString)},
                 description: { type: new GraphQLNonNull(GraphQLString)},
                 expireDate: { type: new GraphQLNonNull(GraphQLString)},

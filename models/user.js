@@ -1,5 +1,5 @@
 var { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLFloat } = require('graphql');
-var Location = require('../models/location');
+// var Location = require('../models/location');
 
 const User = new GraphQLObjectType({
     name: 'User',

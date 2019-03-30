@@ -1,7 +1,8 @@
 var { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLNonNull } = require('graphql');
 var Item = require('../models/item');
-
+var User = require('../models/user');
 var db = require('../utils/database');
+var refItems = db.ref("server/items");
 
 var usersData = []
 
@@ -26,11 +27,18 @@ const Query = new GraphQLObjectType({
     items: {
         type: new GraphQLList(new GraphQLNonNull(Item)),
         resolve(parentValue){
-            refItems.on("value", function(snapshot) {
-                console.log(snapshot.val());
-              }, function (errorObject) {
-                console.log("The read failed: " + errorObject.code);
-              });
+            var count = 0;
+            let val = {};
+            refItems.on("child_added", function(snap) {
+              count++;
+              return snap.val();
+            });
+            
+            // length will always equal count, since snap.val() will include every child_added event
+            // triggered before this point
+            refItems.once("value", function(snap) {
+              console.log("initial data loaded!", snap.numChildren() === count);
+            });
         }
     },
 
