@@ -4,11 +4,13 @@ var express     = require("express"),
     graphqlHTTP = require("express-graphql");
     express_graphql = require("express-graphql")
 var { buildSchema, GraphQLSchema } = require("graphql");
+var cors = require('cors');
+
 
 var Query = require('./actions/query');
 var Mutation = require('./actions/mutation');
 
-
+app.use(cors())
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
 
@@ -25,5 +27,6 @@ app.all('/graphql', graphqlHTTP({
    graphiql: true
  }));
 
-app.listen(process.env.PORT, process.env.IP, () => console.log('Express GraphQL Server Now Running On hostname/graphql'));
+// app.listen(process.env.PORT, process.env.IP, () => console.log('Express GraphQL Server Now Running On hostname/graphql'));
 
+app.listen(4000, () => console.log('Express GraphQL Server Now Running On localhost:4000/graphql'));
