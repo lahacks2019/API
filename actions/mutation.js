@@ -1,5 +1,6 @@
-var { GraphQLObjectType, GraphQLString, GraphQLNonNull } = require('graphql');
+var { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLFloat, GraphQLInt } = require('graphql');
 var Item = require('../models/item');
+var User = require('../models/user');
 // var Location = require('../models/location');
 
 var db = require('../utils/database');
@@ -24,6 +25,22 @@ const Mutation = new GraphQLObjectType({
                 item.push(args);
                 if(item != null) return "SUCCESS";
                 else return "FAIL";
+            }
+        },
+        addUser:{
+            type: User ,
+            args: {
+                id: { type: new GraphQLNonNull(GraphQLString)},
+                email: { type: new GraphQLNonNull(GraphQLString)},
+                identity: { type: new GraphQLNonNull(GraphQLString)},
+                defaultLocation: { type: new GraphQLNonNull(GraphQLString)},
+                rating: { type: new GraphQLNonNull(GraphQLFloat) },
+                reviews: { type: new GraphQLNonNull(GraphQLInt) },
+                benefits: { type: new GraphQLNonNull(GraphQLString)} 
+            },
+            resolve(parentValue, args){
+                var user = ref.child("users");
+                user.set(args);
             }
         },
     }
