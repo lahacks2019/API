@@ -31,7 +31,6 @@ const Mutation = new GraphQLObjectType({
         addUser:{
             type: User ,
             args: {
-                id: { type: new GraphQLNonNull(GraphQLString)},
                 email: { type: new GraphQLNonNull(GraphQLString)},
                 identity: { type: new GraphQLNonNull(GraphQLString)},
                 defaultLocation: { type: new GraphQLNonNull(GraphQLString)},
@@ -41,20 +40,23 @@ const Mutation = new GraphQLObjectType({
             },
             resolve(parentValue, args){
                 var user = ref.child("users");
-                user.set(args);
+                user.push(args);
+                if(user != null) return "SUCCESS";
+                else return "FAIL";
             }
         },
         addTransaction:{
             type: Transaction ,
             args: {
-                id: { type: new GraphQLNonNull(GraphQLString)},
                 userID: { type: new GraphQLNonNull(GraphQLString)},
                 itemID: { type: new GraphQLNonNull(GraphQLString)},
                 time: { type: new GraphQLNonNull(GraphQLString)},
             },
             resolve(parentValue, args){
                 var transaction = ref.child("transactions");
-                transaction.set(args);
+                transaction.push(args);
+                if(transaction != null) return "SUCCESS";
+                else return "FAIL";
             }
         },
     }

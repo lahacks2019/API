@@ -1,10 +1,7 @@
 var { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLNonNull } = require('graphql');
 var Item = require('../models/item');
-<<<<<<< HEAD
 var User = require('../models/user');
 var Transaction = require('../models/transaction');
-=======
->>>>>>> 7d206917eb3c18f905c9ff2fd83a397c42cd0982
 
 var db = require('../utils/database');
 
@@ -89,7 +86,11 @@ const Query = new GraphQLObjectType({
     users: {
         type: new GraphQLList(new GraphQLNonNull(User)),
         resolve(parentValue){
-            return usersData;
+            refUsers.on("value", function(snapshot) {
+                console.log(snapshot.val());
+              }, function (errorObject) {
+                console.log("The read failed: " + errorObject.code);
+              });
         }
     },
 
@@ -110,7 +111,11 @@ const Query = new GraphQLObjectType({
     transactions: {
         type: new GraphQLList(new GraphQLNonNull(Transaction)),
         resolve(parentValue){
-            return transactionsData;
+            refTransactions.on("value", function(snapshot) {
+                console.log(snapshot.val());
+              }, function (errorObject) {
+                console.log("The read failed: " + errorObject.code);
+              });
         }
     },
   }
