@@ -9,18 +9,7 @@ var refItems = db.ref("server/items");
 var val;
 refItems.on("child_added", function(snap) {
   val = snap.val();
-})
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function demo() {
-  console.log('Taking a break...');
-  await sleep(2000);
-  console.log('Two seconds later');
-}
-
+});
 
 var usersData = [
     {
