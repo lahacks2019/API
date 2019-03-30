@@ -6,28 +6,6 @@ var Transaction = require('../models/transaction');
 var db = require('../utils/database');
 var refItems = db.ref("server/items");
 
-var usersData = [
-    {
-        id: "1",
-        email: "restaurant@ucla.edu",
-        identity: "restaurant",
-        defaultLocation: "ucla",
-        rating: 5.0,
-        reviews: 0,
-        benefits: "N/A"
-
-    }
-]
-
-var transactionsData = [
-    {
-        id: "1",
-        userID: "1",
-        itemID: "1",
-        time: "today"
-    }
-]
-
 const Query = new GraphQLObjectType({
   name: 'Query',
   fields: { 

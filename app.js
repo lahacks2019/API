@@ -25,5 +25,5 @@ app.all('/graphql', graphqlHTTP({
    graphiql: true
  }));
 
-app.listen(4000, () => console.log('Express GraphQL Server Now Running On localhost:4000/graphql'));
+app.listen(process.env.PORT, process.env.IP, () => console.log('Express GraphQL Server Now Running On hostname/graphql'));
 
