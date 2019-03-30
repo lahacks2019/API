@@ -1,5 +1,5 @@
 var { GraphQLObjectType, GraphQLString } = require('graphql');
-var Location = require('../models/location');
+// var Location = require('../models/location');
 
 const Item = new GraphQLObjectType({
     name: 'Item',
@@ -10,7 +10,7 @@ const Item = new GraphQLObjectType({
         expireDate: { type: GraphQLString },
         userID: { type: GraphQLString },
         imageURL: { type: GraphQLString },
-        location: { type: Location}   
+        location: { type: GraphQLString }   
     }
 
 });
