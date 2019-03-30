@@ -4,6 +4,7 @@ var { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLFloat } = require('gr
 const User = new GraphQLObjectType({
     name: 'User',
     fields: {
+        id: { type : GraphQLString },
         email: { type : GraphQLString },
         identity: { type: GraphQLString },
         defaultLocation: { type: GraphQLString },
