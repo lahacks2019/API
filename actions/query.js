@@ -1,35 +1,12 @@
 var { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLNonNull } = require('graphql');
 var Item = require('../models/item');
+<<<<<<< HEAD
 var User = require('../models/user');
 var Transaction = require('../models/transaction');
+=======
+>>>>>>> 7d206917eb3c18f905c9ff2fd83a397c42cd0982
 
-//Test Data -> remove afer finishing testing
-var itemsData = [
-    {
-        id: "1",
-        name: 'Noodle',
-        expireDate: '03-12-2019',
-        description: 'Good food',
-        userID: 'a1',
-        imageURL: "https://cdn.pixabay.com/photo/2018/05/08/08/44/artificial-intelligence-3382507_1280.jpg"
-    },
-    {
-        id: "2",
-        name: 'Sandwitch',
-        expireDate: '03-15-2019',
-        description: 'Medium food',
-        userID: 'a1',
-        imageURL: "https://cdn.pixabay.com/photo/2015/09/16/09/48/programming-942487_1280.jpg"
-    },
-    {
-        id: "3",
-        name: 'Chicken',
-        expireDate: '03-16-2019',
-        description: 'Fast food',
-        userID: 'a2',
-        imageURL: "https://cdn.pixabay.com/photo/2017/01/20/17/26/operating-system-1995434_1280.png"
-    }
-]
+var db = require('../utils/database');
 
 var usersData = [
     {
@@ -74,7 +51,11 @@ const Query = new GraphQLObjectType({
     items: {
         type: new GraphQLList(new GraphQLNonNull(Item)),
         resolve(parentValue){
-            return itemsData;
+            refItems.on("value", function(snapshot) {
+                console.log(snapshot.val());
+              }, function (errorObject) {
+                console.log("The read failed: " + errorObject.code);
+              });
         }
     },
 
