@@ -9,7 +9,6 @@ var Query = require('./actions/query');
 var Mutation = require('./actions/mutation');
 
 
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
 

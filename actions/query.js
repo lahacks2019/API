@@ -1,33 +1,9 @@
 var { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLNonNull } = require('graphql');
 var Item = require('../models/item');
+var db = require('../utils/database');
 
-//Test Data -> remove afer finishing testing
-var itemsData = [
-    {
-        id: "1",
-        name: 'Noodle',
-        expireDate: '03-12-2019',
-        description: 'Good food',
-        userID: 'a1',
-        imageURL: 'https://codingthesmartway.com/courses/nodejs/'
-    },
-    {
-        id: "2",
-        name: 'Sandwitch',
-        expireDate: '03-15-2019',
-        description: 'Medium food',
-        userID: 'a1',
-        imageURL: 'https://codingthesmartway.com/courses/nodejs/'
-    },
-    {
-        id: "3",
-        name: 'Chicken',
-        expireDate: '03-16-2019',
-        description: 'Fast food',
-        userID: 'a2',
-        imageURL: 'https://codingthesmartway.com/courses/nodejs/'
-    }
-]
+var refItems = db.ref("server/item");
+       
 
 const Query = new GraphQLObjectType({
   name: 'Query',
@@ -48,7 +24,11 @@ const Query = new GraphQLObjectType({
     items: {
         type: new GraphQLList(new GraphQLNonNull(Item)),
         resolve(parentValue){
-            return itemsData;
+            refItems.on("value", function(snapshot) {
+                console.log(snapshot.val());
+              }, function (errorObject) {
+                console.log("The read failed: " + errorObject.code);
+              });
         }
     },
   }
