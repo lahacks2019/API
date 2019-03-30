@@ -6,6 +6,22 @@ var Transaction = require('../models/transaction');
 var db = require('../utils/database');
 var refItems = db.ref("server/items");
 
+var val;
+refItems.on("child_added", function(snap) {
+  val = snap.val();
+})
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function demo() {
+  console.log('Taking a break...');
+  await sleep(2000);
+  console.log('Two seconds later');
+}
+
+
 var usersData = [
     {
         id: "1",
@@ -49,18 +65,7 @@ const Query = new GraphQLObjectType({
     items: {
         type: new GraphQLList(new GraphQLNonNull(Item)),
         resolve(parentValue){
-            var count = 0;
-            let val = {};
-            refItems.on("child_added", function(snap) {
-              count++;
-              return snap.val();
-            });
-            
-            // length will always equal count, since snap.val() will include every child_added event
-            // triggered before this point
-            refItems.once("value", function(snap) {
-              console.log("initial data loaded!", snap.numChildren() === count);
-            });
+          return [val];  
         }
     },
 
