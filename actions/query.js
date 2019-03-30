@@ -1,6 +1,7 @@
 var { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLNonNull } = require('graphql');
 var Item = require('../models/item');
 var User = require('../models/user');
+var Transaction = require('../models/transaction');
 
 //Test Data -> remove afer finishing testing
 var itemsData = [
@@ -30,13 +31,33 @@ var itemsData = [
     }
 ]
 
-var usersData = []
+var usersData = [
+    {
+        id: "1",
+        email: "restaurant@ucla.edu",
+        identity: "restaurant",
+        defaultLocation: "ucla",
+        rating: 5.0,
+        reviews: 0,
+        benefits: "N/A"
+
+    }
+]
+
+var transactionsData = [
+    {
+        id: "1",
+        userID: "1",
+        itemID: "1",
+        time: "today"
+    }
+]
 
 const Query = new GraphQLObjectType({
   name: 'Query',
   fields: { 
 
-    //item
+    // item
     item: {
         type: Item,
         args: {
@@ -57,7 +78,7 @@ const Query = new GraphQLObjectType({
         }
     },
 
-    //user
+    // user
     user: {
         type: User,
         args: {
@@ -71,7 +92,7 @@ const Query = new GraphQLObjectType({
               })[0];
           }
     },
-    getUsersByEmail: {
+    getUserByEmail: {
         type: User,
         args: {
           email: { type: new GraphQLNonNull(GraphQLString) }
@@ -88,6 +109,27 @@ const Query = new GraphQLObjectType({
         type: new GraphQLList(new GraphQLNonNull(User)),
         resolve(parentValue){
             return usersData;
+        }
+    },
+
+    // transaction
+    transaction: {
+        type: Transaction,
+        args: {
+          id: { type: new GraphQLNonNull(GraphQLString) }
+        },
+          resolve(parentValue, args) {
+              const { id } = args;
+  
+              return transactionsData.filter(transaction =>{
+                  return transaction.id  == id;
+              })[0];
+          }
+    },
+    transactions: {
+        type: new GraphQLList(new GraphQLNonNull(Transaction)),
+        resolve(parentValue){
+            return transactionsData;
         }
     },
   }

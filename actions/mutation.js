@@ -1,6 +1,7 @@
 var { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLFloat, GraphQLInt } = require('graphql');
 var Item = require('../models/item');
 var User = require('../models/user');
+var Transaction = require('../models/transaction');
 // var Location = require('../models/location');
 
 var admin = require("firebase-admin");  
@@ -49,6 +50,19 @@ const Mutation = new GraphQLObjectType({
             resolve(parentValue, args){
                 var user = ref.child("users");
                 user.set(args);
+            }
+        },
+        addTransaction:{
+            type: Transaction ,
+            args: {
+                id: { type: new GraphQLNonNull(GraphQLString)},
+                userID: { type: new GraphQLNonNull(GraphQLString)},
+                itemID: { type: new GraphQLNonNull(GraphQLString)},
+                time: { type: new GraphQLNonNull(GraphQLString)},
+            },
+            resolve(parentValue, args){
+                var transaction = ref.child("transactions");
+                transaction.set(args);
             }
         },
     }
