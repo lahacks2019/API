@@ -1,5 +1,6 @@
 var { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLNonNull } = require('graphql');
 var Item = require('../models/item');
+var User = require('../models/user');
 
 //Test Data -> remove afer finishing testing
 var itemsData = [
@@ -9,7 +10,7 @@ var itemsData = [
         expireDate: '03-12-2019',
         description: 'Good food',
         userID: 'a1',
-        imageURL: 'https://codingthesmartway.com/courses/nodejs/'
+        imageURL: "https://cdn.pixabay.com/photo/2018/05/08/08/44/artificial-intelligence-3382507_1280.jpg"
     },
     {
         id: "2",
@@ -17,7 +18,7 @@ var itemsData = [
         expireDate: '03-15-2019',
         description: 'Medium food',
         userID: 'a1',
-        imageURL: 'https://codingthesmartway.com/courses/nodejs/'
+        imageURL: "https://cdn.pixabay.com/photo/2015/09/16/09/48/programming-942487_1280.jpg"
     },
     {
         id: "3",
@@ -25,13 +26,17 @@ var itemsData = [
         expireDate: '03-16-2019',
         description: 'Fast food',
         userID: 'a2',
-        imageURL: 'https://codingthesmartway.com/courses/nodejs/'
+        imageURL: "https://cdn.pixabay.com/photo/2017/01/20/17/26/operating-system-1995434_1280.png"
     }
 ]
+
+var usersData = []
 
 const Query = new GraphQLObjectType({
   name: 'Query',
   fields: { 
+
+    //item
     item: {
         type: Item,
         args: {
@@ -49,6 +54,40 @@ const Query = new GraphQLObjectType({
         type: new GraphQLList(new GraphQLNonNull(Item)),
         resolve(parentValue){
             return itemsData;
+        }
+    },
+
+    //user
+    user: {
+        type: User,
+        args: {
+          id: { type: new GraphQLNonNull(GraphQLString) }
+        },
+          resolve(parentValue, args) {
+              const { id } = args;
+  
+              return usersData.filter(user =>{
+                  return user.id  == id;
+              })[0];
+          }
+    },
+    getUsersByEmail: {
+        type: User,
+        args: {
+          email: { type: new GraphQLNonNull(GraphQLString) }
+        },
+          resolve(parentValue, args) {
+              const { email } = args;
+  
+              return usersData.filter(user =>{
+                  return user.email  == email;
+              })[0];
+          }
+    },
+    users: {
+        type: new GraphQLList(new GraphQLNonNull(User)),
+        resolve(parentValue){
+            return usersData;
         }
     },
   }

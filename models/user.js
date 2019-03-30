@@ -7,7 +7,7 @@ const User = new GraphQLObjectType({
         id: { type : GraphQLString },
         email: { type : GraphQLString },
         identity: { type: GraphQLString },
-        defaultLocation: { type: Location },
+        defaultLocation: { type: GraphQLString },
         rating : { type: GraphQLFloat },
         reviews: { type: GraphQLInt },
         benefits: { type: GraphQLString}
