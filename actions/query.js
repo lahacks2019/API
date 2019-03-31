@@ -34,15 +34,6 @@ refTransaction.on("child_added", function(snap) {
   transaction_list = [...transaction_list, snap.val()];
 });
 
-var transactionsData = [
-    {
-        id: "1",
-        userID: "1",
-        itemID: "1",
-        time: "today"
-    }
-]
-
 const Query = new GraphQLObjectType({
   name: 'Query',
   fields: { 
