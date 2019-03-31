@@ -1,13 +1,11 @@
-var { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLNonNull } = require('graphql');
+var { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLNonNull , GraphQLInt} = require('graphql');
 var Item = require('../models/item');
 var User = require('../models/user');
 var Transaction = require('../models/transaction');
 var Restaurant = require('../models/restaurant');
 
-
-
-
 var db = require('../utils/database');
+
 var refItems = db.ref("server/items");
 var refRestaurants = db.ref("server/restaurants");
 var refUsers = db.ref("server/users");
@@ -119,7 +117,16 @@ const Query = new GraphQLObjectType({
       resolve(parentValue){
         return restaurant_list;  
       }
-  },
+    },
+    deleteExpireItems:{
+      type: GraphQLInt,
+      resolve(parentValue){
+        let today = new Date();
+
+        refItems.set(val.filter(item => item.expireDate > today.toLocaleDateString()));
+
+      }
+    }
   }
 });
 
