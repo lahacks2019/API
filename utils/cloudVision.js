@@ -4,6 +4,7 @@ var router = express.Router();
 var admin = require('./firebase');
 var os = require('os');
 var storage = admin.storage();
+var fs = require('fs');
 //var bucket = st.bucket();
 // const {Storage} = require('@google-cloud/storage');
 // const storage = new Storage();
@@ -55,6 +56,13 @@ router.post('/', (req, res) => {
     						},
     					});
     					console.log(`${filename} uploaded to ${bucketName}.`);
+    					fs.unlink(filepath, (err) => {
+    						if(err) {
+    							console.log(err);
+    						} else {
+    							console.log("Temporary file has been deleted.");
+    						}
+    					});
     					var splitFilePath = filepath.split('/');
     					var objFileName = splitFilePath[splitFilePath.length - 1];
     					console.log(objFileName);
@@ -64,6 +72,7 @@ router.post('/', (req, res) => {
     					var returnedJson = [];
     					returnedJson.push(metadata.mediaLink);
     					res.json({returnedJson});
+
     				}	
     			});
 
