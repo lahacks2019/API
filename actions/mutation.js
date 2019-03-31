@@ -2,6 +2,7 @@ var { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLFloat, GraphQLInt
 var Item = require('../models/item');
 var User = require('../models/user');
 var Transaction = require('../models/transaction');
+var Restaurant = require('../models/restaurant');
 // var Location = require('../models/location');
 
 var db = require('../utils/database');
@@ -61,6 +62,24 @@ const Mutation = new GraphQLObjectType({
                 var transaction = ref.child("transactions");
                 transaction.push(args);
                 if(transaction != null) return "SUCCESS";
+                else return "FAIL";
+            }
+        },
+        addRestaurant:{
+            type: Restaurant,
+            args: {
+                id : { type: new GraphQLNonNull(GraphQLString)},
+                name: { type : new GraphQLNonNull(GraphQLString) },
+                pictureURL: { type: new GraphQLNonNull(GraphQLString)},
+                fbID: { type: new GraphQLNonNull(GraphQLString)},
+                defaultLocation: { type: new GraphQLNonNull(GraphQLString)},
+                rating: { type: new GraphQLNonNull(GraphQLFloat) },
+                benefits: { type: new GraphQLNonNull(GraphQLString)} 
+            },
+            resolve(parentValue, args){
+                var user = ref.child("restaurants");
+                user.push(args);
+                if(user != null) return "SUCCESS";
                 else return "FAIL";
             }
         },

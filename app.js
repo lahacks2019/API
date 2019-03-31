@@ -3,12 +3,12 @@ var express     					= require("express"),
     bodyParser  					= require("body-parser"),
     graphqlHTTP 					= require("express-graphql"),
     express_graphql 				= require("express-graphql"),
-    cors            				= require('cors'),
+//    cors            				= require('cors'),
 	{ buildSchema, GraphQLSchema } 	= require("graphql"),
 	Query 							= require('./actions/query'),
 	Mutation 						= require('./actions/mutation'),
 
-app.use(cors())
+// app.use(cors())
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
 //app.use('/uploadImage', require('./utils/cloudVision'));
