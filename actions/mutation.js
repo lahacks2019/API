@@ -77,8 +77,8 @@ const Mutation = new GraphQLObjectType({
                 benefits: { type: new GraphQLNonNull(GraphQLString)} 
             },
             resolve(parentValue, args){
-                var user = ref.child("restaurants");
-                user.push(args);
+                var restaurant = ref.child("restaurants");
+                restaurant.push(args);
                 if(user != null) return "SUCCESS";
                 else return "FAIL";
             }

@@ -5,9 +5,13 @@ var Transaction = require('../models/transaction');
 var Restaurant = require('../models/restaurant');
 
 
+
 var db = require('../utils/database');
 var refItems = db.ref("server/items");
 var refRestaurants = db.ref("server/restaurants");
+var refUsers = db.ref("server/users");
+var refTransaction = db.ref("server/transactions");
+
 
 
 var val = [];
@@ -15,9 +19,19 @@ refItems.on("child_added", function(snap) {
   val = [...val, snap.val()];
 });
 
+var user_list = [];
+refUsers.on("child_added", function(snap) {
+  user_list = [...user_list, snap.val()];
+});
+
 var restaurant_list = [];
 refRestaurants.on("child_added", function(snap) {
   restaurant_list = [...restaurant_list, snap.val()];
+});
+
+var transaction_list = [];
+refTransaction.on("child_added", function(snap) {
+  transaction_list = [...transaction_list, snap.val()];
 });
 
 var transactionsData = [
@@ -85,18 +99,7 @@ const Query = new GraphQLObjectType({
     users: {
         type: new GraphQLList(new GraphQLNonNull(User)),
         resolve(parentValue){
-            var count = 0;
-            let val = {};
-            refUsers.on("child_added", function(snap) {
-              count++;
-              return snap.val();
-            });
-            
-            // length will always equal count, since snap.val() will include every child_added event
-            // triggered before this point
-            refUsers.once("value", function(snap) {
-              console.log("initial data loaded!", snap.numChildren() === count);
-            });
+          return user_list;    
         }
     },
 
@@ -116,19 +119,8 @@ const Query = new GraphQLObjectType({
     },
     transactions: {
         type: new GraphQLList(new GraphQLNonNull(Transaction)),
-        resolve(parentValue){
-            var count = 0;
-            let val = {};
-            refTransactions.on("child_added", function(snap) {
-              count++;
-              return snap.val();
-            });
-            
-            // length will always equal count, since snap.val() will include every child_added event
-            // triggered before this point
-            refTransactions.once("value", function(snap) {
-              console.log("initial data loaded!", snap.numChildren() === count);
-            });
+          resolve(parentValue){
+            return transaction_list;
         }
     },
     restaurants: {
