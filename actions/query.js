@@ -5,7 +5,13 @@ var Transaction = require('../models/transaction');
 var Restaurant = require('../models/restaurant');
 
 
+<<<<<<< HEAD
 var db = require('../utils/database');
+=======
+
+var admin = require('../utils/firebase');
+var db = admin.database();
+>>>>>>> ec82bcbbdbf2eacd141c8a4362903861cd85e6b4
 var refItems = db.ref("server/items");
 var refRestaurants = db.ref("server/restaurants");
 var refUsers = db.ref("server/users");
