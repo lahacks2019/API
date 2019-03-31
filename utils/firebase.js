@@ -6,6 +6,4 @@ admin.initializeApp({
   databaseURL: "https://lahacksapp.firebaseio.com"
 });
 
-var storage = admin.storage();
-
-module.exports = storage;
+module.exports = admin;

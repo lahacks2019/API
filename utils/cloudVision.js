@@ -1,17 +1,30 @@
 const axios = require('axios');
 var express = require('express');
 var router = express.Router();
-var storage = require('./storage');
+var admin = require('./firebase');
+var os = require('os');
+var storage = admin.storage();
+//var bucket = st.bucket();
+// const {Storage} = require('@google-cloud/storage');
+// const storage = new Storage();
+var base64Img = require('base64-img');
+var uniqueFilename = require('unique-filename');
 
+const bucketName = "image-lahack";
+const filename = uniqueFilename(os.tmpdir());
+
+const API_KEY='AIzaSyByA-9k2y5xPqKIqBSLR4ha1GwxhZnfYPg';
 
 router.post('/', (req, res) => {
+	console.log("Upload request received!");
 	var userID = req.body.userID;
 	var image = req.body.image;
-	axios.post('https://vision.googleapis.com/v1/images:annotate', {
+	var parsedImage = image.substring(image.search(',') + 1);
+	axios.post('https://vision.googleapis.com/v1/images:annotate?key='+API_KEY, {
 	  	"requests":[
 	    {
 	      "image":{
-	        "content":"/9j/7QBEUGhvdG9..."+ image + "...eYxxxzj/Coa6Bax//Z"
+	        "content": parsedImage
 	      },
 	      "features":[
 	        {
@@ -21,24 +34,56 @@ router.post('/', (req, res) => {
 	      ]
 	    }
   	]
-	}).then(function (response) {
-    	const results = response[0].labelAnnotations;
+	}).then(async function (response) {
+    	const results = response.data.responses[0].labelAnnotations;
     	var returnedJson = [];
-    	results.forEach((result) => {
-    		if(result.description === "food") {
+    	var isFood = false;
+    	await results.forEach(async (result) => {
+    		console.log(result.description);
+    		if(result.description === "Food") {
     			isFood = true;
-    			curRef = storage.ref().child("image/userID");
-    			curRef.putString(image, 'base64url').then((snapshot) => {
-    				console.log('Uploaded a base64url string!');
-    				snapshot.ref.getDownloadURL().then((downloadURL) => {
-    					returnedJson.push(downloadURL);
+    			//var curRef = st.ref().child("image/userID");
+    			await base64Img.img(image, './', filename, async (err, filepath) => {
+    				if(err) {
+    					console.log(err);
+    				} else {
+    					console.log(filepath);
+    		    		await storage.bucket(bucketName).upload(filepath, {
+    						gzip: true,
+    						metadata: {
+    							cacheControl: 'public, max-age = 31536000',
+    						},
+    					});
+    					console.log(`${filename} uploaded to ${bucketName}.`);
+    					var splitFilePath = filepath.split('/');
+    					var objFileName = splitFilePath[splitFilePath.length - 1];
+    					console.log(objFileName);
+    					await storage.bucket(bucketName).file(objFileName).makePublic();
+    					const [metadata] = await storage.bucket(bucketName).file(objFileName).getMetadata();
+    					console.log(`Media link: ${metadata.mediaLink}`);
+    					var returnedJson = [];
+    					returnedJson.push(metadata.mediaLink);
     					res.json({returnedJson});
-    				})
+    				}	
     			});
+
+    			
+    			// promises.push(curRef.putString(image, 'base64url').then((snapshot) => {
+    			// 	console.log('Uploaded a base64url string!');
+    			// 	snapshot.ref.getDownloadURL().then((downloadURL) => {
+    			// 		returnedJson.push(downloadURL);
+    			// 		res.json({returnedJson});
+    			// 	});
+    			// }));
+    			
+    			
     		}
-    	})
-    	promise
-    	res.json({[isFood]});
+    	});
+    	if(!isFood) {
+    		var returnedJson = [];
+    		returnedJson.push(false);
+    		res.json({returnedJson});
+    	}
   }).catch(function (error) {
     console.log(error);
   });
@@ -46,6 +91,6 @@ router.post('/', (req, res) => {
 
 
 
-module.export = router;
+module.exports = router;
 
 
