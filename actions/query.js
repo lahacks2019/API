@@ -2,27 +2,23 @@ var { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLNonNull } = require(
 var Item = require('../models/item');
 var User = require('../models/user');
 var Transaction = require('../models/transaction');
+var Restaurant = require('../models/restaurant');
+
 
 var db = require('../utils/database');
 var refItems = db.ref("server/items");
+var refRestaurants = db.ref("server/restaurants");
 
-var val;
+
+var val = [];
 refItems.on("child_added", function(snap) {
-  val = snap.val();
+  val = [...val, snap.val()];
 });
 
-var usersData = [
-    {
-        id: "1",
-        email: "restaurant@ucla.edu",
-        identity: "restaurant",
-        defaultLocation: "ucla",
-        rating: 5.0,
-        reviews: 0,
-        benefits: "N/A"
-
-    }
-]
+var restaurant_list = [];
+refRestaurants.on("child_added", function(snap) {
+  restaurant_list = [...restaurant_list, snap.val()];
+});
 
 var transactionsData = [
     {
@@ -54,7 +50,8 @@ const Query = new GraphQLObjectType({
     items: {
         type: new GraphQLList(new GraphQLNonNull(Item)),
         resolve(parentValue){
-          return [val];  
+          console.log(val);
+          return val;  
         }
     },
 
@@ -134,6 +131,12 @@ const Query = new GraphQLObjectType({
             });
         }
     },
+    restaurants: {
+      type: new GraphQLList(new GraphQLNonNull(Restaurant)),
+      resolve(parentValue){
+        return restaurant_list;  
+      }
+  },
   }
 });
 

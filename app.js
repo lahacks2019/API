@@ -4,13 +4,13 @@ var express     = require("express"),
     graphqlHTTP = require("express-graphql");
     express_graphql = require("express-graphql")
 var { buildSchema, GraphQLSchema } = require("graphql");
-var cors = require('cors');
+// var cors = require('cors');
 
 
 var Query = require('./actions/query');
 var Mutation = require('./actions/mutation');
 
-app.use(cors())
+// app.use(cors())
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
 
