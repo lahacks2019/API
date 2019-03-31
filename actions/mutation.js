@@ -7,8 +7,9 @@ var Restaurant = require('../models/restaurant');
 
 var admin = require('../utils/firebase');
 var db = admin.database();
-
 var ref = db.ref("server/");
+var refItem = db.ref("server/items");
+
 
 const Mutation = new GraphQLObjectType({
     name: 'Mutation',
@@ -62,8 +63,7 @@ const Mutation = new GraphQLObjectType({
             resolve(parentValue, args){
                 var transaction = ref.child("transactions");
                 transaction.push(args);
-                if(transaction != null) return "SUCCESS";
-                else return "FAIL";
+                if(transaction === null) return {FAIL};
             }
         },
         addRestaurant:{
@@ -84,6 +84,7 @@ const Mutation = new GraphQLObjectType({
                 else return "FAIL";
             }
         },
+        
     }
 });
 
