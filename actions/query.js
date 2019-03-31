@@ -11,28 +11,6 @@ refItems.on("child_added", function(snap) {
   val = snap.val();
 });
 
-var usersData = [
-    {
-        id: "1",
-        email: "restaurant@ucla.edu",
-        identity: "restaurant",
-        defaultLocation: "ucla",
-        rating: 5.0,
-        reviews: 0,
-        benefits: "N/A"
-
-    }
-]
-
-var transactionsData = [
-    {
-        id: "1",
-        userID: "1",
-        itemID: "1",
-        time: "today"
-    }
-]
-
 const Query = new GraphQLObjectType({
   name: 'Query',
   fields: { 
@@ -88,18 +66,7 @@ const Query = new GraphQLObjectType({
     users: {
         type: new GraphQLList(new GraphQLNonNull(User)),
         resolve(parentValue){
-            var count = 0;
-            let val = {};
-            refUsers.on("child_added", function(snap) {
-              count++;
-              return snap.val();
-            });
-            
-            // length will always equal count, since snap.val() will include every child_added event
-            // triggered before this point
-            refUsers.once("value", function(snap) {
-              console.log("initial data loaded!", snap.numChildren() === count);
-            });
+          return [val];  
         }
     },
 
@@ -120,18 +87,7 @@ const Query = new GraphQLObjectType({
     transactions: {
         type: new GraphQLList(new GraphQLNonNull(Transaction)),
         resolve(parentValue){
-            var count = 0;
-            let val = {};
-            refTransactions.on("child_added", function(snap) {
-              count++;
-              return snap.val();
-            });
-            
-            // length will always equal count, since snap.val() will include every child_added event
-            // triggered before this point
-            refTransactions.once("value", function(snap) {
-              console.log("initial data loaded!", snap.numChildren() === count);
-            });
+          return [val];  
         }
     },
   }
