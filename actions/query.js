@@ -7,8 +7,7 @@ var Restaurant = require('../models/restaurant');
 
 
 
-var admin = require('../utils/firebase');
-var db = admin.database();
+var db = require('../utils/database');
 var refItems = db.ref("server/items");
 var refRestaurants = db.ref("server/restaurants");
 var refUsers = db.ref("server/users");

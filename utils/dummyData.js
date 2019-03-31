@@ -49,57 +49,57 @@ itemsData = [
 
 usersData = [
     {
-        id: "1",
-        email: "restaurant@ucla.edu",
-        identity: "ucla restaurant",
-        pictureURL: "https://housing.ucla.edu/sites/g/files/yaccgq796/f/styles/panopoly_image_original/public/hh_ds_bruin_plate_drupal_0.jpg?itok=ync2bNVm",
-        fbID: "ucla restaurant"
-        defaultLocation: "ucla",
-        rating: 5.0,
-        reviews: 0,
-        benefits: "N/A"
+        "id": "1",
+        "email": "restaurant@ucla.edu",
+        "identity": "ucla restaurant",
+        "pictureURL": "https://housing.ucla.edu/sites/g/files/yaccgq796/f/styles/panopoly_image_original/public/hh_ds_bruin_plate_drupal_0.jpg?itok=ync2bNVm",
+        "fbID": "ucla restaurant",
+        "defaultLocation": "ucla",
+        "rating": 5.0,
+        "reviews": 0,
+        "benefits": "N/A"
     },
     {
-        id: "2",
-        email: "Altria@gmail.com",
-        identity: "Individual",
-        pictureUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9uuFhJ7Jn7zhfk3MdbpHlaGwK81KBq6R9V_0efAymBM68WlE2"
-        fbID: "Altria"
-        defaultLocation: "England",
-        rating: 3.0,
-        reviews: 0,
-        benefits: "N/A"
+        "id": "2",
+        "email": "Altria@gmail.com",
+        "identity": "Individual",
+        "pictureURL": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9uuFhJ7Jn7zhfk3MdbpHlaGwK81KBq6R9V_0efAymBM68WlE2",
+        "fbID": "Altria",
+        "defaultLocation": "England",
+        "rating": 3.0,
+        "reviews": 0,
+        "benefits": "N/A"
     },
     {
-        id: "3",
-        email: "Jaina@gmail.com",
-        identity: "Individual",
-        pictureUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSakhC9zZ_p6a5pk4oS9VUWQG9A__2ju90TSrmTu-oxNTa8rR8B"
-        fbID: "Jaina"
-        defaultLocation: "Dalaran",
-        rating: 4.0,
-        reviews: 0,
-        benefits: "N/A"
+        "id": "3",
+        "email": "Jaina@gmail.com",
+        "identity": "Individual",
+        "pictureURL": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSakhC9zZ_p6a5pk4oS9VUWQG9A__2ju90TSrmTu-oxNTa8rR8B"
+        "fbID": "Jaina"
+        "defaultLocation": "Dalaran",
+        "rating": 4.0,
+        "reviews": 0,
+        "benefits": "N/A"
     },
 ]
 
 transactionsData = [
     {
-        id: "1",
-        userID: "2",
-        itemID: "1",
-        time: "3/30/2019"
+        "id": "1",
+        "userID": "2",
+        "itemID": "1",
+        "time": "3/30/2019"
     },
     {
-        id: "2",
-        userID: "2",
-        itemID: "2",
-        time: "3/30/2019"
+        "id": "2",
+        "userID": "2",
+        "itemID": "2",
+        "time": "3/30/2019"
     },
     {
-        id: "3",
-        userID: "2",
-        itemID: "3",
-        time: "3/30/2019"
+        "id": "3",
+        "userID": "2",
+        "itemID": "3",
+        "time": "3/30/2019"
     },
 ]

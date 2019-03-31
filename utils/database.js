@@ -5,5 +5,5 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://lahacksapp.firebaseio.com"
 });
-
-module.exports = admin;
+var db = admin.database();
+module.exports = db;

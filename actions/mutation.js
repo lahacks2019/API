@@ -5,8 +5,7 @@ var Transaction = require('../models/transaction');
 var Restaurant = require('../models/restaurant');
 // var Location = require('../models/location');
 
-var admin = require('../utils/firebase');
-var db = admin.database();
+var db = require('../utils/database');
 
 var ref = db.ref("server/");
 

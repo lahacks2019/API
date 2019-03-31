@@ -9,7 +9,7 @@ var express     					= require("express"),
 	Mutation 						= require('./actions/mutation');
 
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: "15MB", type: 'application/json'}));
 app.use('/uploadImage', require('./utils/cloudVision'));
 
 const schema = new GraphQLSchema({
