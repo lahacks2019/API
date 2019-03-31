@@ -14,7 +14,7 @@ var uniqueFilename = require('unique-filename');
 const bucketName = "image-lahack";
 const filename = uniqueFilename(os.tmpdir());
 
-const API_KEY='AIzaSyByA-9k2y5xPqKIqBSLR4ha1GwxhZnfYPg';
+const API_KEY = process.env.APP_ENV;
 
 router.post('/', (req, res) => {
 	console.log("Upload request received!");
