@@ -14,7 +14,7 @@ var uniqueFilename = require('unique-filename');
 const bucketName = "image-lahack";
 const filename = uniqueFilename(os.tmpdir());
 
-const API_KEY = process.env.APP_ENV;
+const API_KEY = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
 
 router.post('/', (req, res) => {
 	console.log("Upload request received!");

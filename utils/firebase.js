@@ -1,4 +1,4 @@
-var serviceAccount = require("./lahacksapp-firebase-adminsdk-psvcz-9144d45011.json");
+var serviceAccount = require("../lahacksapp-firebase-adminsdk-psvcz-56063e76df.json");
 var admin = require("firebase-admin");  
 
 admin.initializeApp({
