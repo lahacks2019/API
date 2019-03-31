@@ -5,13 +5,11 @@ var Transaction = require('../models/transaction');
 var Restaurant = require('../models/restaurant');
 
 
-
 var db = require('../utils/database');
 var refItems = db.ref("server/items");
 var refRestaurants = db.ref("server/restaurants");
 var refUsers = db.ref("server/users");
 var refTransaction = db.ref("server/transactions");
-
 
 
 var val = [];
@@ -47,7 +45,7 @@ const Query = new GraphQLObjectType({
           resolve(parentValue, args) {
               const { id } = args;
   
-              return itemsData.filter(item =>{
+              return val.filter(item =>{
                   return item.id  == id;
               })[0];
           }
@@ -69,7 +67,7 @@ const Query = new GraphQLObjectType({
           resolve(parentValue, args) {
               const { id } = args;
   
-              return usersData.filter(user =>{
+              return user_list.filter(user =>{
                   return user.id  == id;
               })[0];
           }
@@ -82,7 +80,7 @@ const Query = new GraphQLObjectType({
           resolve(parentValue, args) {
               const { email } = args;
   
-              return usersData.filter(user =>{
+              return user_list.filter(user =>{
                   return user.email  == email;
               })[0];
           }

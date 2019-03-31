@@ -8,12 +8,10 @@ var express     					= require("express"),
 	Query 							= require('./actions/query'),
 	Mutation 						= require('./actions/mutation');
 
-// app.use(cors())
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
 //app.use('/uploadImage', require('./utils/cloudVision'));
 
-// GraphQL schema - test/remove later
 const schema = new GraphQLSchema({
    query: Query,
    mutation: Mutation
@@ -26,6 +24,6 @@ app.all('/graphql', graphqlHTTP({
    graphiql: true
  }));
 
-app.listen(process.env.PORT, process.env.IP, () => console.log('Express GraphQL Server Now Running On hostname/graphql'));
+// app.listen(process.env.PORT, process.env.IP, () => console.log('Express GraphQL Server Now Running On hostname/graphql'));
 
-//app.listen(4000, () => console.log('Express GraphQL Server Now Running On localhost:4000/graphql'));
+app.listen(4000, () => console.log('Express GraphQL Server Now Running On localhost:4000/graphql'));
